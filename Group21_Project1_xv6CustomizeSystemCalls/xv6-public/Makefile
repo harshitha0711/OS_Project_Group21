@@ -167,6 +167,7 @@ mkfs: mkfs.c fs.h
 
 UPROGS=\
        _test_getppid\
+	   _test_getprocinfo\
 	_cat\
 	_echo\
 	_forktest\
