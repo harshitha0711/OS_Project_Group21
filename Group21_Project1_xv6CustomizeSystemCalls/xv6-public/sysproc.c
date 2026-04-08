@@ -12,6 +12,12 @@ int sys_getppid(void)
     return p->parent->pid;
 }
 int
+sys_getprocinfo(void)
+{
+  procdump();
+  return 0;
+}
+int
 sys_fork(void)
 {
   return fork();
