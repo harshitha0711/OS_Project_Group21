@@ -4,6 +4,7 @@ struct rtcdate;
 
 // system calls
 int getppid(void);
+int getprocinfo(void);
 int fork(void);
 int exit(void) __attribute__((noreturn));
 int wait(void);
