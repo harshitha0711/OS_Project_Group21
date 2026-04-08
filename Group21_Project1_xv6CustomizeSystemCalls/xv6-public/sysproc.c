@@ -6,7 +6,11 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
-
+int sys_getppid(void)
+{
+    struct proc *p = myproc();
+    return p->parent->pid;
+}
 int
 sys_fork(void)
 {

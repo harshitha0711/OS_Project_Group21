@@ -6,7 +6,6 @@
 #include "proc.h"
 #include "x86.h"
 #include "syscall.h"
-
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
 // Arguments on the stack, from the user call to the C
@@ -81,7 +80,7 @@ argstr(int n, char **pp)
     return -1;
   return fetchstr(addr, pp);
 }
-
+extern int sys_getppid(void);
 extern int sys_chdir(void);
 extern int sys_close(void);
 extern int sys_dup(void);
@@ -126,6 +125,7 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
+[SYS_getppid] sys_getppid,
 };
 
 void
