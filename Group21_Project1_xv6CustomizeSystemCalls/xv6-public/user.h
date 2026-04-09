@@ -5,6 +5,7 @@ struct rtcdate;
 // system calls
 int getppid(void);
 int getprocinfo(void);
+int setpriority(int pid, int priority);
 int fork(void);
 int exit(void) __attribute__((noreturn));
 int wait(void);
