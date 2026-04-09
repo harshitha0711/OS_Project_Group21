@@ -88,6 +88,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->priority = 10;  // default priority (lower value = higher priority)
 
   release(&ptable.lock);
 
@@ -323,22 +324,28 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct proc *highp;           // highest-priority (lowest value) RUNNABLE proc
   struct cpu *c = mycpu();
   c->proc = 0;
-  
+
   for(;;){
     // Enable interrupts on this processor.
     sti();
 
-    // Loop over process table looking for process to run.
+    // Loop over process table to find highest-priority RUNNABLE process.
     acquire(&ptable.lock);
+
+    highp = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
+      // Pick process with lowest priority number (lower = higher urgency).
+      if(highp == 0 || p->priority < highp->priority)
+        highp = p;
+    }
 
-      // Switch to chosen process.  It is the process's job
-      // to release ptable.lock and then reacquire it
-      // before jumping back to us.
+    if(highp != 0){
+      p = highp;
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
@@ -347,11 +354,10 @@ scheduler(void)
       switchkvm();
 
       // Process is done running for now.
-      // It should have changed its p->state before coming back.
       c->proc = 0;
     }
-    release(&ptable.lock);
 
+    release(&ptable.lock);
   }
 }
 
