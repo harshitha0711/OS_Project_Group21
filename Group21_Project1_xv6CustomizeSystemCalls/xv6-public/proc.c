@@ -538,3 +538,22 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+// Set the scheduling priority of process with given pid.
+// Returns 0 on success, -1 if pid not found.
+int
+setpriority(int pid, int priority)
+{
+  struct proc *p;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->pid == pid){
+      p->priority = priority;
+      release(&ptable.lock);
+      return 0;
+    }
+  }
+  release(&ptable.lock);
+  return -1;   // pid not found
+}
