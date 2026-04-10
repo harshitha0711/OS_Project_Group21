@@ -113,6 +113,7 @@ struct proc*    myproc();
 void            pinit(void);
 void            procdump(void);
 int             setpriority(int, int);
+int             sendmsg(int, char*);
 void            scheduler(void) __attribute__((noreturn));
 void            sched(void);
 void            setproc(struct proc*);

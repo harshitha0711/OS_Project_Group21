@@ -113,3 +113,20 @@ sys_setpriority(void)
 
   return setpriority(pid, priority);
 }
+
+// Send a message to the process identified by pid.
+// Returns 0 on success, -1 if pid not found or bad arguments.
+int
+sys_sendmsg(void)
+{
+  int pid;
+  char *msg;
+
+  if(argint(0, &pid) < 0)
+    return -1;
+
+  if(argstr(1, &msg) < 0)
+    return -1;
+
+  return sendmsg(pid, msg);
+}

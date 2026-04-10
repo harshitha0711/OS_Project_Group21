@@ -353,6 +353,12 @@ scheduler(void)
       swtch(&(c->scheduler), p->context);
       switchkvm();
 
+      // Check if process has a pending IPC message
+      if(p->has_msg){
+        cprintf("Process %d received message: %s\n", p->pid, p->msg);
+        p->has_msg = 0;
+      }
+
       // Process is done running for now.
       c->proc = 0;
     }
@@ -556,4 +562,25 @@ setpriority(int pid, int priority)
   }
   release(&ptable.lock);
   return -1;   // pid not found
+}
+
+// Send a message to the process with given pid.
+// Copies msg into the target process's message buffer.
+// Returns 0 on success, -1 if pid not found.
+int
+sendmsg(int pid, char *msg)
+{
+  struct proc *p;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->pid == pid){
+      safestrcpy(p->msg, msg, sizeof(p->msg));
+      p->has_msg = 1;
+      release(&ptable.lock);
+      return 0;
+    }
+  }
+  release(&ptable.lock);
+  return -1; // pid not found
 }

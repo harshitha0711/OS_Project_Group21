@@ -50,6 +50,8 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  char msg[100];               // IPC message buffer
+  int has_msg;                 // flag (0 = no message, 1 = message available)
 };
 
 // Process memory is laid out contiguously, low addresses first:

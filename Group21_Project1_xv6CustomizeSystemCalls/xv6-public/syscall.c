@@ -83,6 +83,7 @@ argstr(int n, char **pp)
 extern int sys_getppid(void);
 extern int sys_getprocinfo(void);
 extern int sys_setpriority(void);
+extern int sys_sendmsg(void);
 extern int sys_chdir(void);
 extern int sys_close(void);
 extern int sys_dup(void);
@@ -130,6 +131,7 @@ static int (*syscalls[])(void) = {
 [SYS_getppid] sys_getppid,
 [SYS_getprocinfo] sys_getprocinfo,
 [SYS_setpriority] sys_setpriority,
+[SYS_sendmsg] sys_sendmsg,
 };
 
 void
