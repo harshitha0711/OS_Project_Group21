@@ -24,4 +24,5 @@
 #define SYS_getppid 22
 #define SYS_getprocinfo 24
 #define SYS_setpriority 25
+#define SYS_sleep2 26
 #define SYS_sendmsg 27

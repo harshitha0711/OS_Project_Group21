@@ -130,3 +130,22 @@ sys_sendmsg(void)
 
   return sendmsg(pid, msg);
 }
+int
+sys_sleep2(void)
+{
+  int n;
+  uint ticks0;
+  if(argint(0, &n) < 0)
+    return -1;
+  acquire(&tickslock);
+  ticks0 = ticks;
+  while(ticks - ticks0 < n){
+    if(myproc()->killed){
+      release(&tickslock);
+      return -1;
+    }
+    sleep(&ticks, &tickslock);
+  }
+  release(&tickslock);
+  return 0;
+}

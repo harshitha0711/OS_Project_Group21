@@ -26,6 +26,7 @@ int dup(int);
 int getpid(void);
 char* sbrk(int);
 int sleep(int);
+int sleep2(int);
 int uptime(void);
 int sendmsg(int, char*);
 
