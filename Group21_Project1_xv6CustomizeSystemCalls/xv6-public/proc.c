@@ -364,6 +364,24 @@ scheduler(void)
     }
 
     release(&ptable.lock);
+    if(p->signal == 1){
+  cprintf("Process %d killed\n", p->pid);
+  p->killed = 1;
+  p->signal = 0;
+}
+
+else if(p->signal == 2){
+  cprintf("Process %d paused\n", p->pid);
+  p->state = SLEEPING;
+  p->signal = 0;
+}
+
+else if(p->signal == 3){
+  cprintf("Process %d resumed\n", p->pid);
+  if(p->state == SLEEPING)
+    p->state = RUNNABLE;
+  p->signal = 0;
+}
   }
 }
 
@@ -584,3 +602,4 @@ sendmsg(int pid, char *msg)
   release(&ptable.lock);
   return -1; // pid not found
 }
+

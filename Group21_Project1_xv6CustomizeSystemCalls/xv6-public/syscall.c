@@ -106,6 +106,7 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
+extern int sys_kill2(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -134,6 +135,7 @@ static int (*syscalls[])(void) = {
 [SYS_getprocinfo] sys_getprocinfo,
 [SYS_setpriority] sys_setpriority,
 [SYS_sendmsg] sys_sendmsg,
+[SYS_kill2] sys_kill2,
 };
 
 void

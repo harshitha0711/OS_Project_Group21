@@ -29,6 +29,7 @@ int sleep(int);
 int sleep2(int);
 int uptime(void);
 int sendmsg(int, char*);
+int kill2(int, int);
 
 // ulib.c
 int stat(const char*, struct stat*);
