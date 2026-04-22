@@ -1,4 +1,4 @@
-//#include <stdio.h>
+#include <stdio.h>
 #include "scheduler.h"
 
 void calculate_metrics(Process p[], int n) {
